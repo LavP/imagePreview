@@ -4,24 +4,60 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <title>Document</title>
+    <title>Image Preview 0.1</title>
     <style>
-        *{
+        img,body{
             margin: 0;
             padding: 0;
             border: none;
         }
-        img{
+        #imgarea{
             width: 100%;
             height: auto;
+        }
+        .howto{
+            display: none;
         }
     </style>
 </head>
 <body>
+    <section class="howto">
+        <h1>Image Preview 0.1の使い方</h1>
+        <p>imagesフォルダの中に入れた画像等をブラウザでプレビューできるツールです。</p>
+        <p>URLに次のパラメタを付与すると様々な効果を得られます。</p>
+        <dl>
+            <dt>?name=filename.png</dt>
+            <dd>ファイル名を拡張子込みで入力します</dd>
+            <dt>?size=100</dt>
+            <dd>画像の横幅を％で指定します</dd>
+            <dt>?maxsize=1200</dt>
+            <dd>画像の最大幅をpxで指定します</dd>
+            <dt>?minsize=300</dt>
+            <dd>画像の最小幅をpxで指定します</dd>
+            <dt>?bgcolor=f4f4f4</dt>
+            <dd>透過画像を指定した場合に設定される色をカラーコードで指定します</dd>
+            <dt>?bgimg=bg.gif</dt>
+            <dd>透過画像を指定した場合に設定される背景画像を指定します</dd>
+            <dt>?bgrepeat=x</dt>
+            <dd>
+                背景画像をリピートするかを指定します。<br>
+                x  = 横方向のみリピート<br>
+                y  = 縦方向のみリピート<br>
+                xy = 全方向にリピート<br>
+                no = リピートしない
+            </dd>
+        </dl>
+    </section>
     <img id="imgarea" src="images/hoge.png" alt="">
     <script>
         let arg = new Object;
         const pair = location.search.substring(1).split('&');
+
+        console.log(pair);
+        if(pair[0] == ''){
+            document.getElementsByClassName('howto')[0].classList.remove('howto');
+        }
+
         for(let i=0;pair[i];i++) {
             let kv = pair[i].split('=');
             arg[kv[0]]=kv[1];
