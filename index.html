@@ -1,104 +1,115 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta http-equiv="X-UA-Compatible" content="ie=edge" />
     <title>Image Preview 1.0</title>
     <style>
-        img,body{
-            margin: 0;
-            padding: 0;
-            border: none;
-        }
-        body{
-            width: 100%;
-            height: 100%;
-        }
-        #imgarea{
-            display: block;
-            width: 100%;
-            height: auto;
-            margin: 0 auto;
-        }
-        .howto{
-            display: none;
-        }
+      img,
+      body {
+        margin: 0;
+        padding: 0;
+        border: none;
+      }
+      body {
+        width: 100%;
+        height: 100%;
+      }
+      #imgarea {
+        display: block;
+        width: 100%;
+        height: auto;
+        margin: 0 auto;
+      }
+      .howto {
+        display: none;
+      }
     </style>
-</head>
-<body>
+  </head>
+  <body>
     <section class="howto">
-        <h1>Image Preview 1.0の使い方</h1>
-        <p>imagesフォルダの中に入れた画像等をブラウザでプレビューできるツールです。</p>
-        <p>URLに次のパラメタを付与すると様々な効果を得られます。</p>
-        <dl>
-            <dt>?name=filename.png</dt>
-            <dd>ファイル名を拡張子込みで入力します</dd>
-            <dt>?size=100</dt>
-            <dd>画像の横幅を％で指定します</dd>
-            <dt>?maxsize=1200</dt>
-            <dd>画像の最大幅をpxで指定します</dd>
-            <dt>?minsize=300</dt>
-            <dd>画像の最小幅をpxで指定します</dd>
-            <dt>?bgcolor=f4f4f4</dt>
-            <dd>透過画像を指定した場合に設定される色をカラーコードで指定します</dd>
-            <dt>?bgimg=bg.gif</dt>
-            <dd>透過画像を指定した場合に設定される背景画像を指定します</dd>
-            <dt>?bgsize=10</dt>
-            <dd>背景画像のサイズをvwで指定します</dd>
-            <dt>?bgrepeat=x</dt>
-            <dd>
-                背景画像をリピートするかを指定します。<br>
-                x  = 横方向のみリピート<br>
-                y  = 縦方向のみリピート<br>
-                xy = 全方向にリピート<br>
-                no = リピートしない
-            </dd>
-        </dl>
+      <h1>Image Preview 1.0の使い方</h1>
+      <p>
+        imagesフォルダの中に入れた画像等をブラウザでプレビューできるツールです。
+      </p>
+      <p>URLに次のパラメタを付与すると様々な効果を得られます。</p>
+      <dl>
+        <dt>?name=filename.png</dt>
+        <dd>ファイル名を拡張子込みで入力します</dd>
+        <dt>?size=100</dt>
+        <dd>画像の横幅を％で指定します</dd>
+        <dt>?maxsize=1200</dt>
+        <dd>画像の最大幅をpxで指定します</dd>
+        <dt>?minsize=300</dt>
+        <dd>画像の最小幅をpxで指定します</dd>
+        <dt>?bgcolor=f4f4f4</dt>
+        <dd>透過画像を指定した場合に設定される色をカラーコードで指定します</dd>
+        <dt>?bgimg=bg.gif</dt>
+        <dd>透過画像を指定した場合に設定される背景画像を指定します</dd>
+        <dt>?bgsize=10</dt>
+        <dd>背景画像のサイズをvwで指定します</dd>
+        <dt>?bgrepeat=x</dt>
+        <dd>
+          背景画像をリピートするかを指定します。<br />
+          x = 横方向のみリピート<br />
+          y = 縦方向のみリピート<br />
+          xy = 全方向にリピート<br />
+          no = リピートしない
+        </dd>
+      </dl>
     </section>
-    <img id="imgarea" src="images/hoge.png" alt="">
+    <img id="imgarea" src="images/hoge.png" alt="" />
     <script>
-        let paras = new Object;
-        const pair = location.search.substring(1).split('&');
+      let paras = new Object();
+      const pair = location.search.substring(1).split("&");
 
-        //何もパラメタがなかったら説明を表示する
-        if(pair[0] == ''){
-            document.getElementsByClassName('howto')[0].classList.remove('howto');
-        }
-        //パラメタを展開
-        for(let i=0;pair[i];i++) {
-            let kv = pair[i].split('=');
-            paras[kv[0]]=kv[1];
-        }
-        console.log(paras);
+      //何もパラメタがなかったら説明を表示する
+      if (pair[0] == "") {
+        document.getElementsByClassName("howto")[0].classList.remove("howto");
+      }
+      //パラメタを展開
+      for (let i = 0; pair[i]; i++) {
+        let kv = pair[i].split("=");
+        paras[kv[0]] = kv[1];
+      }
+      console.log(paras);
 
-        //クエリー
-        const target = document.getElementById('imgarea');
-        const bg = document.querySelector('body');
+      //クエリー
+      const target = document.getElementById("imgarea");
+      const bg = document.querySelector("body");
 
-        //メイン画像のセット
-        target.setAttribute('src','images/'+paras.name);
-        target.setAttribute('alt',paras.name+' is not found.');
-        //メイン画像の横幅セット
-        target.style.width = paras.size+'%';
-        //メイン画像のmin,maxセット
-        target.style.minWidth = paras.minsize+'px';
-        target.style.maxWidth = paras.maxsize+'px';
-        //背景色のセット
-        bg.style.backgroundColor = '#'+paras.bgcolor;
-        //背景画像のセット
-        bg.style.backgroundImage = 'url(images/'+paras.bgimg+')';
-        //背景画像のサイズをセット
-        bg.style.backgroundSize = 'auto '+paras.bgsize+'vw';
-        //背景リピートのセット
-        if(paras.bgrepeat != undefined){
-            switch (paras.bgrepeat) {
-                case 'x': bg.style.backgroundRepeat = 'repeat-x'; break;
-                case 'y': bg.style.backgroundRepeat = 'repeat-y'; break;
-                case 'xy': bg.style.backgroundRepeat = 'repeat'; break;
-                case 'no': bg.style.backgroundRepeat = 'no-repeat'; break;
-            }
+      //メイン画像のセット
+      target.setAttribute("src", "images/" + paras.name);
+      target.setAttribute("alt", paras.name + " is not found.");
+      //メイン画像の横幅セット
+      target.style.width = paras.size + "%";
+      //メイン画像のmin,maxセット
+      target.style.minWidth = paras.minsize + "px";
+      target.style.maxWidth = paras.maxsize + "px";
+      //背景色のセット
+      bg.style.backgroundColor = "#" + paras.bgcolor;
+      //背景画像のセット
+      bg.style.backgroundImage = "url(images/" + paras.bgimg + ")";
+      //背景画像のサイズをセット
+      bg.style.backgroundSize = "auto " + paras.bgsize + "vw";
+      //背景リピートのセット
+      if (paras.bgrepeat != undefined) {
+        switch (paras.bgrepeat) {
+          case "x":
+            bg.style.backgroundRepeat = "repeat-x";
+            break;
+          case "y":
+            bg.style.backgroundRepeat = "repeat-y";
+            break;
+          case "xy":
+            bg.style.backgroundRepeat = "repeat";
+            break;
+          case "no":
+            bg.style.backgroundRepeat = "no-repeat";
+            break;
         }
+      }
     </script>
-</body>
+  </body>
 </html>
