@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+    <style>
+        *{
+            margin: 0;
+            padding: 0;
+            border: none;
+        }
+        img{
+            width: 100%;
+            height: auto;
+        }
+    </style>
+</head>
+<body>
+    <img id="imgarea" src="images/hoge.png" alt="">
+    <script>
+        let arg = new Object;
+        const pair = location.search.substring(1).split('&');
+        for(let i=0;pair[i];i++) {
+            let kv = pair[i].split('=');
+            arg[kv[0]]=kv[1];
+        }
+        const target = document.getElementById('imgarea');
+
+        target.setAttribute('src','images/'+arg.name);
+        target.setAttribute('alt',arg.name+' is not found.')
+    </script>
+</body>
+</html>
