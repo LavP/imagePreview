@@ -44,6 +44,8 @@
             <dd>透過画像を指定した場合に設定される色をカラーコードで指定します</dd>
             <dt>?bgimg=bg.gif</dt>
             <dd>透過画像を指定した場合に設定される背景画像を指定します</dd>
+            <dt>?bgsize=10</dt>
+            <dd>背景画像のサイズをvwで指定します</dd>
             <dt>?bgrepeat=x</dt>
             <dd>
                 背景画像をリピートするかを指定します。<br>
@@ -86,6 +88,8 @@
         bg.style.backgroundColor = '#'+paras.bgcolor;
         //背景画像のセット
         bg.style.backgroundImage = 'url(images/'+paras.bgimg+')';
+        //背景画像のサイズをセット
+        bg.style.backgroundSize = 'auto '+paras.bgsize+'vw';
         //背景リピートのセット
         if(paras.bgrepeat != undefined){
             switch (paras.bgrepeat) {
