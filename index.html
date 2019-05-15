@@ -4,16 +4,22 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <title>Image Preview 0.1</title>
+    <title>Image Preview 1.0</title>
     <style>
         img,body{
             margin: 0;
             padding: 0;
             border: none;
         }
+        body{
+            width: 100%;
+            height: 100%;
+        }
         #imgarea{
+            display: block;
             width: 100%;
             height: auto;
+            margin: 0 auto;
         }
         .howto{
             display: none;
@@ -22,7 +28,7 @@
 </head>
 <body>
     <section class="howto">
-        <h1>Image Preview 0.1の使い方</h1>
+        <h1>Image Preview 1.0の使い方</h1>
         <p>imagesフォルダの中に入れた画像等をブラウザでプレビューできるツールです。</p>
         <p>URLに次のパラメタを付与すると様々な効果を得られます。</p>
         <dl>
@@ -50,22 +56,45 @@
     </section>
     <img id="imgarea" src="images/hoge.png" alt="">
     <script>
-        let arg = new Object;
+        let paras = new Object;
         const pair = location.search.substring(1).split('&');
 
-        console.log(pair);
+        //何もパラメタがなかったら説明を表示する
         if(pair[0] == ''){
             document.getElementsByClassName('howto')[0].classList.remove('howto');
         }
-
+        //パラメタを展開
         for(let i=0;pair[i];i++) {
             let kv = pair[i].split('=');
-            arg[kv[0]]=kv[1];
+            paras[kv[0]]=kv[1];
         }
-        const target = document.getElementById('imgarea');
+        console.log(paras);
 
-        target.setAttribute('src','images/'+arg.name);
-        target.setAttribute('alt',arg.name+' is not found.')
+        //クエリー
+        const target = document.getElementById('imgarea');
+        const bg = document.querySelector('body');
+
+        //メイン画像のセット
+        target.setAttribute('src','images/'+paras.name);
+        target.setAttribute('alt',paras.name+' is not found.');
+        //メイン画像の横幅セット
+        target.style.width = paras.size+'%';
+        //メイン画像のmin,maxセット
+        target.style.minWidth = paras.minsize+'px';
+        target.style.maxWidth = paras.maxsize+'px';
+        //背景色のセット
+        bg.style.backgroundColor = '#'+paras.bgcolor;
+        //背景画像のセット
+        bg.style.backgroundImage = 'url(images/'+paras.bgimg+')';
+        //背景リピートのセット
+        if(paras.bgrepeat != undefined){
+            switch (paras.bgrepeat) {
+                case 'x': bg.style.backgroundRepeat = 'repeat-x'; break;
+                case 'y': bg.style.backgroundRepeat = 'repeat-y'; break;
+                case 'xy': bg.style.backgroundRepeat = 'repeat'; break;
+                case 'no': bg.style.backgroundRepeat = 'no-repeat'; break;
+            }
+        }
     </script>
 </body>
 </html>
